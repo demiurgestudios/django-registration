@@ -5,7 +5,9 @@ Base view classes for all registration workflows.
 
 from django.conf import settings
 from django.http import HttpResponseRedirect
-from django.urls import reverse_lazy
+from django.core.urlresolvers import reverse
+from django.utils.functional import lazy
+reverse_lazy = lazy(reverse, str)
 from django.utils.encoding import force_text
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView

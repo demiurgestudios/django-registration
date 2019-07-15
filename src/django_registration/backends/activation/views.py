@@ -9,8 +9,11 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.sites.shortcuts import get_current_site
 from django.core import signing
+from django.template import Context
 from django.template.loader import render_to_string
-from django.urls import reverse_lazy
+from django.core.urlresolvers import reverse
+from django.utils.functional import lazy
+reverse_lazy = lazy(reverse, str)
 from django.utils.translation import ugettext_lazy as _
 
 from django_registration import signals
@@ -93,16 +96,14 @@ class RegistrationView(BaseRegistrationView):
         context['user'] = user
         subject = render_to_string(
             template_name=self.email_subject_template,
-            context=context,
-            request=self.request
+            context_instance=Context(context),
         )
         # Force subject to a single line to avoid header-injection
         # issues.
         subject = ''.join(subject.splitlines())
         message = render_to_string(
             template_name=self.email_body_template,
-            context=context,
-            request=self.request
+            context_instance=Context(context),
         )
         user.email_user(subject, message, settings.DEFAULT_FROM_EMAIL)
 
