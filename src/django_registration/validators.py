@@ -5,7 +5,7 @@ django-registration's various user-registration form classes.
 """
 import unicodedata
 
-from confusable_homoglyphs import confusables
+#from confusable_homoglyphs import confusables
 from django.core.exceptions import ValidationError
 from django.utils import six
 from django.utils.deconstruct import deconstructible
@@ -253,8 +253,8 @@ def validate_confusables(value):
     """
     if not isinstance(value, six.text_type):
         return
-    if confusables.is_dangerous(value):
-        raise ValidationError(CONFUSABLE, code='invalid')
+    #if confusables.is_dangerous(value):
+    #    raise ValidationError(CONFUSABLE, code='invalid')
 
 
 def validate_confusables_email(value):
@@ -271,6 +271,6 @@ def validate_confusables_email(value):
     if '@' not in value:
         return
     local_part, domain = value.split('@')
-    if confusables.is_dangerous(local_part) or \
-       confusables.is_dangerous(domain):
-        raise ValidationError(CONFUSABLE_EMAIL, code='invalid')
+    #if confusables.is_dangerous(local_part) or \
+    #   confusables.is_dangerous(domain):
+    #    raise ValidationError(CONFUSABLE_EMAIL, code='invalid')
